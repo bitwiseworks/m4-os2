@@ -28,6 +28,7 @@
 #ifndef _GL_SCHED_H
 #define _GL_SCHED_H
 
+#ifndef __KLIBC__
 #if !@HAVE_STRUCT_SCHED_PARAM@
 
 struct sched_param
@@ -36,6 +37,7 @@ struct sched_param
 };
 
 #endif
+#endif // __KLIBC__
 
 #if !(defined SCHED_FIFO && defined SCHED_RR && defined SCHED_OTHER)
 # define SCHED_FIFO   1

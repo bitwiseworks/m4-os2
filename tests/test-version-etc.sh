@@ -31,6 +31,7 @@ There is NO WARRANTY, to the extent permitted by law.
 Written by Sergey Poznyakoff and Eric Blake.
 EOT
 
+dos2unix $TMP
 ./test-version-etc${EXEEXT} --version |
  sed '1s/test-version-etc (.*) .*/test-version-etc (PROJECT) VERSION/
       /^Packaged by/d

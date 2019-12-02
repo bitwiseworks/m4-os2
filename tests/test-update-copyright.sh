@@ -24,7 +24,7 @@ else
 fi
 
 # Ensure the update-copyright program gets found.
-PATH=$abs_aux_dir:$PATH
+PATH="$abs_aux_dir;$PATH"
 export PATH
 
 TMP_BASE=update-copyright.test
@@ -37,8 +37,8 @@ trap 'rm -f $TMP_BASE*' 0 1 2 3 15
 TMP=$TMP_BASE
 s=$TMP-script
 cat <<\EOF > $s
-eval '(exit $?0)' && eval 'exec perl -wS -0777 -pi "$0" "$@"'
-  & eval 'exec perl -wS -0777 -pi "$0" $argv:q'
+eval '(exit $?0)' && eval 'exec perl -wS -0777 -pi.bkp "$0" "$@"'
+  & eval 'exec perl -wS -0777 -pi.bkp "$0" $argv:q'
     if 0;
 s/a/b/
 EOF

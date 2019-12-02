@@ -161,7 +161,7 @@ fi
 gl_shell_test_script_='
 test $(echo y) = y || exit 1
 f_local_() { local v=1; }; f_local_ || exit 1
-f_dash_local_fail_() { local t=$(printf " 1"); }; f_dash_local_fail_
+f_dash_local_fail_() { t=$(printf " 1"); }; f_dash_local_fail_
 score_=10
 if test "$VERBOSE" = yes; then
   test -n "$( (exec 3>&1; set -x; P=1 true 2>&3) 2> /dev/null)" && score_=9
@@ -240,6 +240,14 @@ else
     echo "$ME_: exec failed" 1>&2
     exit 127
   fi
+fi
+# The user is always right.
+if test "${PATH_SEPARATOR+set}" != set; then
+  PATH_SEPARATOR=:
+  (PATH='/bin;/bin;/@unixroot/usr/bin'; FPATH=$PATH; sh -c :) >/dev/null 2>&1 && {
+    (PATH='/bin:/bin:/@unixroot/usr/bin'; FPATH=$PATH; sh -c :) >/dev/null 2>&1 ||
+      PATH_SEPARATOR=';'
+  }
 fi
 
 # If this is bash, turn off all aliases.
@@ -429,13 +437,13 @@ path_prepend_ ()
     path_dir_=$1
     case $path_dir_ in
       '') fail_ "invalid path dir: '$1'";;
-      /*) abs_path_dir_=$path_dir_;;
+      [\\/]* | ?:[\\/]*) abs_path_dir_=$path_dir_;;
       *) abs_path_dir_=$initial_cwd_/$path_dir_;;
     esac
     case $abs_path_dir_ in
-      *:*) fail_ "invalid path dir: '$abs_path_dir_'";;
+      *$PATH_SEPARATOR*) fail_ "invalid path dir: '$abs_path_dir_'";;
     esac
-    PATH="$abs_path_dir_:$PATH"
+    PATH="$abs_path_dir_$PATH_SEPARATOR$PATH"
 
     # Create an alias, FOO, for each FOO.exe in this directory.
     create_exe_shims_ "$abs_path_dir_" \

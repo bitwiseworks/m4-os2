@@ -1,5 +1,5 @@
-eval '(exit $?0)' && eval 'exec perl -wS -0777 -pi "$0" "$@"'
-  & eval 'exec perl -wS -0777 -pi "$0" $argv:q'
+eval '(exit $?0)' && eval 'exec perl -wS -0777 -pi.bkp "$0" "$@"'
+  & eval 'exec perl -wS -0777 -pi.bkp "$0" $argv:q'
     if 0;
 # Update an FSF copyright year list to include the current year.
 

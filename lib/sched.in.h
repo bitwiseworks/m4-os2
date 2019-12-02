@@ -1,5 +1,5 @@
-/* Replacement <sched.h> for platforms that lack it.
-   Copyright (C) 2008-2013 Free Software Foundation, Inc.
+/* A GNU-like <sched.h>.
+   Copyright (C) 2008-2016 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -23,6 +23,9 @@
 
 /* The include_next requires a split double-inclusion guard.  */
 #if @HAVE_SCHED_H@
+# if @HAVE_SYS_CDEFS_H@
+#  include <sys/cdefs.h>
+# endif
 # @INCLUDE_NEXT@ @NEXT_SCHED_H@
 #endif
 
@@ -35,7 +38,13 @@
    and Mac OS X 10.5.  */
 #include <sys/types.h>
 
-#ifndef __KLIBC__
+#ifdef __KLIBC__
+
+/* On OS/2 kLIBC, struct sched_param is in spawn.h */
+# include <spawn.h>
+
+#endif
+
 #if !@HAVE_STRUCT_SCHED_PARAM@
 
 # if !GNULIB_defined_struct_sched_param
@@ -47,7 +56,6 @@ struct sched_param
 # endif
 
 #endif
-#endif // __KLIBC__
 
 #if !(defined SCHED_FIFO && defined SCHED_RR && defined SCHED_OTHER)
 # define SCHED_FIFO   1

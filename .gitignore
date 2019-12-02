@@ -1,0 +1,22 @@
+git rm -f INSTALL
+git rm -f Makefile.in
+git rm -f aclocal.m4
+autom4te.cache
+build-aux/ar-lib
+build-aux/compile
+build-aux/config.guess
+build-aux/config.sub
+build-aux/depcomp
+build-aux/install-sh
+build-aux/mdate-sh
+build-aux/missing
+build-aux/test-driver
+build-aux/texinfo.tex
+checks/Makefile.in
+configure
+doc/Makefile.in
+examples/Makefile.in
+lib/Makefile.in
+lib/config.hin~
+src/Makefile.in
+tests/Makefile.in
